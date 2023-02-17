@@ -10,7 +10,7 @@
 - [x] Create an Admin User
 - [x] Use CloudShell
 - [x] Generate AWS Credentials
-- [ ] Installed AWS CLI
+- [x] Installed AWS CLI
 - [ ] Create a Billing Alarm
 - [ ] Create a Budget
 

@@ -11,8 +11,8 @@
 - [x] Use CloudShell
 - [x] Generate AWS Credentials
 - [x] Installed AWS CLI
-- [ ] Create a Billing Alarm
-- [ ] Create a Budget
+- [x] Create a Billing Alarm
+- [x] Create a Budget
 
 ## Conceptual Diagram
 

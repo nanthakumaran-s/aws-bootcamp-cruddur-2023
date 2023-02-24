@@ -17,6 +17,7 @@ Besides doing live stream activities and homework,
 - [Homeworks](#homeworks)
   + [Dockerfile CMD as an external script](#external-script)
   + [Push and tag a image to DockerHub](#push-and-tag-a-image-to-dockerhub)
+  + [Use multi-stage building](#use-multi-stage-building)
 
 ---
 ## Activities
@@ -190,4 +191,58 @@ e7a0eed9531e: Mounted from library/python
 ```
 
 <img width="1425" alt="image" src="https://user-images.githubusercontent.com/59391441/221235918-af17b9c9-8f0b-42e9-90a0-7e7d1cec4d1c.png">
+
+### Use multi-stage building
+
+Here is a link for my linkedin post that I created about Multi stage building -> [Linkedin Post](https://www.linkedin.com/feed/update/urn:li:activity:7017108084254793728/?utm_source=share&utm_medium=member_desktop)
+> Mainly multi stage building is to optimise the size of the docker images
+
+1. Building the image
+
+```Dockerfile
+FROM python:3.10-slim-buster AS builder
+
+WORKDIR /backend-flask
+
+COPY requirements.txt requirements.txt
+RUN pip3 install --user --no-cache-dir -r requirements.txt
+
+COPY . .
+```
+
+2. Running the image
+
+```Dockerfile
+FROM python:3.10-slim-buster
+
+WORKDIR /backend-flask
+
+COPY --from=builder /root/.local /root/.local
+ENV PATH=/root/.local/bin:$PATH
+
+COPY startup_script.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/startup_script.sh
+
+ENV FLASK_ENV=development
+
+EXPOSE ${PORT}
+
+CMD [ "/usr/local/bin/startup_script.sh"]
+```
+
+3. Result of the reduced size of the image
+
+```bash
+# before
+❯ docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED              SIZE
+cruddur-backend               latest    f89e9f655ad3   About a minute ago   123MB
+
+# After
+❯ docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED         SIZE
+cruddur-backend               latest    a9d5d7ece2ff   3 seconds ago   115MB
+```
+
+Commit -> [fix: multi stagged build added](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/36cc454ebbd37e40e0674cb9e5b7f35d53355828)
 

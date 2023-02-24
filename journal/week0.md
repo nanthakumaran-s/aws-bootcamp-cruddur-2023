@@ -25,6 +25,12 @@ Unknown output type: default
 
 Then I found that when configuring aws cli we need to specify the output format as one of these `json`, `text` or `table`
 
+## Billing Alarm
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/221105901-d7e85541-dc3e-4c11-9c7c-b828469baa73.png">
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/221106966-30ef5093-7959-4b0d-ad96-f5c446584488.png">
+
+
 ## Conceptual Diagram
 
 <img width="821" alt="image" src="https://user-images.githubusercontent.com/59391441/219666236-c4ea044e-3d14-41d8-8170-cefde76456aa.png">

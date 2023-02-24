@@ -19,6 +19,7 @@ Besides doing live stream activities and homework,
   + [Push and tag a image to DockerHub](#push-and-tag-a-image-to-dockerhub)
   + [Use multi-stage building](#use-multi-stage-building)
   + [Implement a healthcheck](#implement-a-healthcheck)
+  + [Best practices Dockerfile](#best-practices-dockerfile)
 
 ---
 ## Activities
@@ -286,3 +287,43 @@ CONTAINER ID   IMAGE                                         COMMAND            
 ```
 
 Commit -> [fix: added healthcheck to backend](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/1fd05859925924f9ee6350f628cb17f05f5eee98)
+
+### Best practices Dockerfile
+
+Some of the best practices for writing Dockerfile are,
+
+1. - [x] Avoid installing unnecessary packages.
+
+To avoid unnecessary packages we have `requirements.txt` in the backend and `package.json` in the frontend to install only the required packages
+
+2. - [x]  Chain all RUN commands
+
+To avoid this the docker file is changed from
+
+```Dockerfile
+RUN chmod +x /usr/local/bin/startup_script.sh
+
+RUN apt-get update 
+RUN apt-get install -y gcc
+RUN apt-get install -y curl
+```
+
+to
+
+```Dockerfile
+RUN apt-get update \
+    apt-get install -y gcc \
+    apt-get install -y curl \
+    chmod +x /usr/local/bin/startup_script.sh
+```
+
+3. - [x] Use a .dockerignore file
+
+A `.dockerignore` file is added in the way a `.gitignore` file is used in the project [dockerignore](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/blob/main/backend-flask/.dockerignore)
+
+4. - [x] Use the best order of statements
+5. - [x] Using a minimal base image
+
+To satisfy this we are using `alpine` version of the images. Basically alpine version of the images are smaller in size compared to the original or classical image.
+
+Commit -> [refactor: best practices dockerfile](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/15e112e7e5233a20767bcc073c9d9d32e8971ba4)

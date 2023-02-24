@@ -11,6 +11,9 @@ Besides doing live stream activities and homework,
 
 - Activities
   + [Containerize backend and frontend](#application-containerization)
+  + [Notification in Cruddur](#added-notification-for-cruddur)
+  + [Open API](#added-documentation-for-notification-route)
+  + [DynamoDB local and PostgreSQL](#dynamodb-local-and-postgresql)
 
 ---
 
@@ -19,13 +22,13 @@ Besides doing live stream activities and homework,
 
 Commit -> [fix: dockerised both server and client and managed using docker compose](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/b28d98588ec0c5ef356a1ed01e755b388d851a86)
 
-### Added Notification route in server
+### Added Notification for Cruddur
 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/221218575-1ff3a4e0-4f63-466f-b492-ad8f6c02d8ec.png">
 
 Commit -> [feat: added notification endpoint and notifications page](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/a9e4ee3f35e47c8af1095d04fb64146fbf5dcf3f)
 
-### Added documentation in `openapi-3.0/yml`
+### Added documentation for notification route
 
 <img width="871" alt="image" src="https://user-images.githubusercontent.com/59391441/221219492-47d8b838-583c-448c-a238-4caa2daa9d41.png">
 

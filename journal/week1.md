@@ -18,6 +18,7 @@ Besides doing live stream activities and homework,
   + [Dockerfile CMD as an external script](#external-script)
   + [Push and tag a image to DockerHub](#push-and-tag-a-image-to-dockerhub)
   + [Use multi-stage building](#use-multi-stage-building)
+  + [Implement a healthcheck](#implement-a-healthcheck)
 
 ---
 ## Activities
@@ -246,3 +247,42 @@ cruddur-backend               latest    a9d5d7ece2ff   3 seconds ago   115MB
 
 Commit -> [fix: multi stagged build added](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/36cc454ebbd37e40e0674cb9e5b7f35d53355828)
 
+### Implement a healthcheck
+
+Add these healthchecks to the `docker-compose.yml` under the `backend-flask`
+
+```yml
+services:
+  backend-flask:
+    ...
+    healthcheck:
+      test: curl --fail https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}/api/activities/home || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 10s
+```
+
+Install `curl` in the `Dockerfile` in the `backend-flask`
+
+```Dockerfile
+RUN apt-get update 
+RUN apt-get install -y gcc
+RUN apt-get install -y curl
+```
+
+Scroll and check out the status of the container. The status will be `healthy`, `unhealthy` or `health: starting`
+
+```sh
+# At the time of starting the container
+gitpod /workspace/aws-bootcamp-cruddur-2023 (main) $ docker ps
+CONTAINER ID   IMAGE                                         COMMAND                  CREATED          STATUS                             PORTS                                       NAMES
+19e28b7a6331   aws-bootcamp-cruddur-2023-backend-flask       "/usr/local/bin/star…"   20 seconds ago   Up 19 seconds (health: starting)   0.0.0.0:4567->4567/tcp, :::4567->4567/tcp   aws-bootcamp-cruddur-2023-backend-flask-1
+
+# After sometime
+gitpod /workspace/aws-bootcamp-cruddur-2023 (main) $ docker ps
+CONTAINER ID   IMAGE                                         COMMAND                  CREATED         STATUS                   PORTS                                       NAMES
+19e28b7a6331   aws-bootcamp-cruddur-2023-backend-flask       "/usr/local/bin/star…"   7 minutes ago   Up 7 minutes (healthy)   0.0.0.0:4567->4567/tcp, :::4567->4567/tcp   aws-bootcamp-cruddur-2023-backend-flask-1
+```
+
+Commit -> [fix: added healthcheck to backend](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/1fd05859925924f9ee6350f628cb17f05f5eee98)

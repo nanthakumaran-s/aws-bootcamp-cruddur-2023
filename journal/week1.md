@@ -16,6 +16,7 @@ Besides doing live stream activities and homework,
   + [DynamoDB local and PostgreSQL](#dynamodb-local-and-postgresql)
 - [Homeworks](#homeworks)
   + [Dockerfile CMD as an external script](#external-script)
+  + [Push and tag a image to DockerHub](#push-and-tag-a-image-to-dockerhub)
 
 ---
 ## Activities
@@ -144,3 +145,49 @@ gitpod /workspace/aws-bootcamp-cruddur-2023 (main) $ docker compose up
 ```
 
 Commit -> [fix: CMD as an external script](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/316bed6607420fbab74bb3db17c18afc945a5edc)
+
+### Push and tag a image to DockerHub
+
+1. Build the image
+
+```bash                                                                                      
+❯ docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED         SIZE
+...
+cruddur-backend               latest    f89e9f655ad3   6 seconds ago   123MB
+...
+```
+
+2. Login to Docker hub by the command `docker login`
+3. Tag the image created by the build command in the specified format for pushing it to docker hub. Basically `<username>/<imagename>:<tagname>`
+
+```bash
+❯ docker tag cruddur-backend nanthakumaran/cruddur-backend:1.0
+❯ docker images
+REPOSITORY                      TAG       IMAGE ID       CREATED              SIZE
+cruddur-backend                 latest    f89e9f655ad3   About a minute ago   123MB
+nanthakumaran/cruddur-backend   1.0       f89e9f655ad3   About a minute ago   123MB
+...
+```
+
+4. Push it to the registry by the command `docker push`
+
+```bash
+❯ docker push nanthakumaran/cruddur-backend:1.0
+The push refers to repository [docker.io/nanthakumaran/cruddur-backend]
+537dfe5ba3aa: Pushed 
+82c4663ade00: Pushed 
+eb31ebdc1629: Pushed 
+cb1553bbda4c: Pushed 
+a39fafe062c4: Pushed 
+3da2cac66d3d: Pushed 
+b941393613c0: Mounted from library/python 
+f7263e15144b: Mounted from library/python 
+d787e9b182b9: Mounted from library/python 
+3d30caea0349: Mounted from library/python 
+e7a0eed9531e: Mounted from library/python 
+1.0: digest: sha256:3dbfd69f10df842d2d811fc379f7cf71c3616454675ddd2e39f1d7ab1f59af14 size: 2617
+```
+
+<img width="1425" alt="image" src="https://user-images.githubusercontent.com/59391441/221235918-af17b9c9-8f0b-42e9-90a0-7e7d1cec4d1c.png">
+

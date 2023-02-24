@@ -30,6 +30,12 @@ Then I found that when configuring aws cli we need to specify the output format 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/221105901-d7e85541-dc3e-4c11-9c7c-b828469baa73.png">
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/221106966-30ef5093-7959-4b0d-ad96-f5c446584488.png">
 
+## AWS Budgets
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/221108153-30288097-6b47-4de1-9b67-2341bafef90d.png">
+
+> NOTE: Here I have added 2 subscribers for a budget
+
 
 ## Conceptual Diagram
 

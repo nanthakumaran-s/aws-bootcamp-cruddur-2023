@@ -20,6 +20,7 @@ Besides doing live stream activities and homework,
   + [Use multi-stage building](#use-multi-stage-building)
   + [Implement a healthcheck](#implement-a-healthcheck)
   + [Best practices Dockerfile](#best-practices-dockerfile)
+  + [Docker on Local Machine](#docker-on-local-machine)
 
 ---
 ## Activities
@@ -327,3 +328,31 @@ A `.dockerignore` file is added in the way a `.gitignore` file is used in the pr
 To satisfy this we are using `alpine` version of the images. Basically alpine version of the images are smaller in size compared to the original or classical image.
 
 Commit -> [refactor: best practices dockerfile](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/15e112e7e5233a20767bcc073c9d9d32e8971ba4)
+
+### Docker on Local Machine
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/221256955-722b3fd0-572c-4dc1-9359-8670a7724447.png">
+
+```sh
+❯ docker -v
+Docker version 20.10.22, build 3a2c30b
+```
+
+#### Images on local machine
+
+```sh
+❯ docker images
+REPOSITORY                                    TAG         IMAGE ID       CREATED          SIZE
+aws-bootcamp-cruddur-2023-frontend-react-js   latest      7a6b03b9ea44   42 seconds ago   1.14GB
+aws-bootcamp-cruddur-2023-backend-flask       latest      e2f77afe1c7f   48 seconds ago   235MB
+postgres                                      13-alpine   7fca7d7fd865   13 days ago      236MB
+amazon/dynamodb-local                         latest      ca5098db69d3   3 weeks ago      546MB
+nginx                                         alpine      d0ddde8e3f4f   3 months ago     22.1MB
+mongo                                         latest      1a5c8f74cf95   4 months ago     667MB
+jenkins/jenkins                               alpine      945a0cfe1c07   5 months ago     262MB
+ubuntu                                        latest      21735dab04ba   5 months ago     69.2MB
+gcr.io/k8s-minikube/kicbase                   v0.0.26     f155e4723c40   17 months ago    976MB
+```
+
+<img width="1099" alt="image" src="https://user-images.githubusercontent.com/59391441/221258067-57da248b-3b0e-403d-b2b2-801c01eff87a.png">
+

@@ -9,13 +9,16 @@ Besides doing live stream activities and homework,
 
 ### Table of Contents
 
-- Activities
+- [Activities](#activities)
   + [Containerize backend and frontend](#application-containerization)
   + [Notification in Cruddur](#added-notification-for-cruddur)
   + [Open API](#added-documentation-for-notification-route)
   + [DynamoDB local and PostgreSQL](#dynamodb-local-and-postgresql)
+- [Homeworks](#homeworks)
+  + [Dockerfile CMD as an external script](#external-script)
 
 ---
+## Activities
 
 ### Application Containerization
 
@@ -103,5 +106,39 @@ postgres=# exit
 
 Commit -> [fix: added dynamodb and postgresql using docker compose](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/c2f1a77f147c0b293584872c8d7eae9cfc5d5ab5)
 
+## Homeworks
 
+### External Script
 
+1. Create a shell script to run the flask application 
+
+```sh
+#!/bin/bash
+echo "Started from external script"
+python3 -m flask run --host=0.0.0.0 --port=4567
+```
+2. Copy it to the `usr/local/bin` directory and make it executable by `chmod` command
+
+```Dockerfile
+COPY startup_script.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/startup_script.sh
+
+CMD ["/usr/local/bin/startup_script.sh"]
+```
+3. Run `docker compose up` to use the external script
+> NOTE: You need to remove the previous image before running the new. You can do it by `docker rmi <IMAGE ID>`
+
+```sh
+gitpod /workspace/aws-bootcamp-cruddur-2023 (main) $ docker compose up
+[+] Building 1.2s (12/12) FINISHED                                                                                             
+ => [internal] load build definition from Dockerfile                                                                      0.0s
+ ...
+ ...
+ aws-bootcamp-cruddur-2023-backend-flask-1      | Started from external script
+ ...
+ aws-bootcamp-cruddur-2023-backend-flask-1      |  * Running on all addresses (0.0.0.0)
+ aws-bootcamp-cruddur-2023-backend-flask-1      |  * Running on http://127.0.0.1:4567
+ aws-bootcamp-cruddur-2023-backend-flask-1      |  * Running on http://172.18.0.4:4567
+ ...
+ ...
+```

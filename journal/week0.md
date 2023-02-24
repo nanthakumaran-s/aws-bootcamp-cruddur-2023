@@ -14,6 +14,17 @@
 - [x] Create a Billing Alarm
 - [x] Create a Budget
 
+## AWS CLI Output
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/221104615-9140becf-1247-484f-b7e1-3d6574b3e246.png">
+
+Problem faced: I have ran into a issue that every cli command outputs 
+
+```bash
+Unknown output type: default
+```
+
+Then I found that when configuring aws cli we need to specify the output format as one of these `json`, `text` or `table`
+
 ## Conceptual Diagram
 
 <img width="821" alt="image" src="https://user-images.githubusercontent.com/59391441/219666236-c4ea044e-3d14-41d8-8170-cefde76456aa.png">

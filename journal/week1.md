@@ -21,6 +21,7 @@ Besides doing live stream activities and homework,
   + [Implement a healthcheck](#implement-a-healthcheck)
   + [Best practices Dockerfile](#best-practices-dockerfile)
   + [Docker on Local Machine](#docker-on-local-machine)
+  + [EC2 instance with Docker](#ec2-instance-with-docker)
 
 ---
 ## Activities
@@ -356,3 +357,138 @@ gcr.io/k8s-minikube/kicbase                   v0.0.26     f155e4723c40   17 mont
 
 <img width="1099" alt="image" src="https://user-images.githubusercontent.com/59391441/221258067-57da248b-3b0e-403d-b2b2-801c01eff87a.png">
 
+### EC2 instance with Docker
+
+#### Launch a ec2 instance
+
+To have an ec2 instance running,
+
+1. Go to launch wizard of ec2
+2. Launch an instance with the following configurations
+   + Give a name for the instance. I named mine as `Docker Instance`
+   + Select `Amazon Linux` with `t2.micro` to stick with the free tier
+   + Use a existing key pair or create a new one to get access to the shell of the ec2 instance
+   + Launch the instnace
+3. After the ec2 instance launched, you can double check it by `Instance(running): 1` on your resource monitor
+4. Once the instance started running, click the `connect` in the upper right corner and select `SSH client`
+5. Follow the steps to gain the ssh login into the ec2 instance. 
+
+After these steps we will see something similar to
+
+```sh
+❯ ssh -i "nanthakumaran-key-pair.pem" ec2-user@ec2-34-237-140-210.compute-1.amazonaws.com
+The authenticity of host 'ec2-34-237-140-210.compute-1.amazonaws.com (34.237.140.210)' can't be established.
+ED25519 key fingerprint is SHA256:X03uuNiUCMBhSgtrOzGcIqB9sOOCOEABqb3IaHPofWA.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'ec2-34-237-140-210.compute-1.amazonaws.com' (ED25519) to the list of known hosts.
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+No packages needed for security; 5 packages available
+Run "sudo yum update" to apply all updates.
+-bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
+```
+
+#### Docker Installation
+
+I have used `yum` package manager to install Docker
+
+```sh
+[ec2-user@ip-172-31-4-129 ~]$ sudo yum update
+[ec2-user@ip-172-31-4-129 ~]$ sudo yum install docker
+```
+
+Once Docker is installed, Start the docker services by running
+
+```sh
+[ec2-user@ip-172-31-4-129 ~]$ sudo systemctl enable docker.service
+[ec2-user@ip-172-31-4-129 ~]$ sudo systemctl start docker.service
+```
+
+You can verify the status by running
+
+```sh
+[ec2-user@ip-172-31-4-129 ~]$ sudo systemctl status docker.service
+● docker.service - Docker Application Container Engine
+   Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; vendor preset: disabled)
+   Active: active (running) since Sat 2023-02-25 03:34:22 UTC; 12min ago
+     Docs: https://docs.docker.com
+  Process: 6534 ExecStartPre=/usr/libexec/docker/docker-setup-runtimes.sh (code=exited, status=0/SUCCESS)
+  Process: 6533 ExecStartPre=/bin/mkdir -p /run/docker (code=exited, status=0/SUCCESS)
+ Main PID: 6537 (dockerd)
+    Tasks: 7
+   Memory: 20.8M
+   CGroup: /system.slice/docker.service
+           └─6537 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --default-ulimit nofile=32768:65536
+
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal dockerd[6537]: time="2023-02-25T03:34:22.231219975Z" level=info msg="ClientConn switching...e=grpc
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal dockerd[6537]: time="2023-02-25T03:34:22.271594286Z" level=warning msg="Your kernel does ...eight"
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal dockerd[6537]: time="2023-02-25T03:34:22.272091678Z" level=warning msg="Your kernel does ...evice"
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal dockerd[6537]: time="2023-02-25T03:34:22.272559697Z" level=info msg="Loading containers: start."
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal dockerd[6537]: time="2023-02-25T03:34:22.471184942Z" level=info msg="Default bridge (dock...dress"
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal dockerd[6537]: time="2023-02-25T03:34:22.530280799Z" level=info msg="Loading containers: done."
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal dockerd[6537]: time="2023-02-25T03:34:22.548716886Z" level=info msg="Docker daemon" commi....10.17
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal dockerd[6537]: time="2023-02-25T03:34:22.549185899Z" level=info msg="Daemon has completed...ation"
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal systemd[1]: Started Docker Application Container Engine.
+Feb 25 03:34:22 ip-172-31-4-129.ec2.internal dockerd[6537]: time="2023-02-25T03:34:22.576818974Z" level=info msg="API listen on /run/d....sock"
+Hint: Some lines were ellipsized, use -l to show in full.
+```
+
+Now Docker is installed and running successsfully.
+
+#### Pulling a container and run it
+
+For this I'm going to pull the nginx image
+
+```sh
+[ec2-user@ip-172-31-4-129 ~]$ sudo docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+bb263680fed1: Pull complete
+258f176fd226: Pull complete
+a0bc35e70773: Pull complete
+077b9569ff86: Pull complete
+3082a16f3b61: Pull complete
+7e9b29976cce: Pull complete
+Digest: sha256:6650513efd1d27c1f8a5351cbd33edf85cc7e0d9d0fcb4ffb23d8fa89b601ba8
+```
+
+To verify
+
+```sh
+[ec2-user@ip-172-31-4-129 ~]$ sudo docker images
+REPOSITORY                      TAG       IMAGE ID       CREATED        SIZE
+nanthakumaran/cruddur-backend   1.0       f89e9f655ad3   11 hours ago   123MB
+```
+
+Run the image by,
+
+```sh
+[ec2-user@ip-172-31-4-129 ~]$ sudo docker run --rm -d nginx
+66ff9371bccc93cf550a1cff437e786ef692ac3f8b9a0d57f12cc3af2dcd02b1
+[ec2-user@ip-172-31-4-129 ~]$ sudo docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+66ff9371bccc   nginx     "/docker-entrypoint.…"   5 seconds ago   Up 4 seconds   80/tcp    cool_hawking
+```
+
+#### Running without sudo
+
+have you noticed that every docker commands needs `sudo` to run. To rectify it follow these steps
+
+```sh
+[ec2-user@ip-172-31-4-129 ~]$ sudo usermod -a -G docker ec2-user
+[ec2-user@ip-172-31-4-129 ~]$ id ec2-user
+uid=1000(ec2-user) gid=1000(ec2-user) groups=1000(ec2-user),4(adm),10(wheel),190(systemd-journal),992(docker)
+[ec2-user@ip-172-31-4-129 ~]$ newgrp docker
+[ec2-user@ip-172-31-4-129 ~]$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+nginx        latest    3f8a00f137a0   2 weeks ago   142MB
+```
+
+#### Images of ec2 instance
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/221334929-2a98eb3c-2f6d-4ea8-93a0-3c65358df580.png">

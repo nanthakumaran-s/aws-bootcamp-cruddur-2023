@@ -1,9 +1,12 @@
 # Week 1 — App Containerization
 
-### Highlights
+### Highlights of this week
 Besides doing live stream activities and homework,
 - Added tasks in gitpod to install node modules on startup
-- Run the backend and frontend both in gitpod and local environment
+- Explored a lot of bash scripting skills and got familiar with `curl` and `grep` commands
+- Understood the best security practices while working with containers as well as working with `kubernetes`
+- Explored a lot on `VPC and Security groups` (Wishing to have a dedicated week on VPC and Security groups)
+- Managed to solve the `sudo` issue that I saw while using `docker` commands on my ec2 instance -> [Running without sudo](#running-without-sudo)
 
 ---
 

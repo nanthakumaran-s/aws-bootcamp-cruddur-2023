@@ -16,10 +16,11 @@ ENV PATH=/root/.local/bin:$PATH
 
 COPY startup_script.sh /usr/local/bin/
 
-RUN apt-get update \
-    apt-get install -y gcc \
-    apt-get install -y curl \
-    chmod +x /usr/local/bin/startup_script.sh
+RUN apt-get update
+RUN apt-get install -y gcc
+RUN apt-get install -y curl
+
+RUN chmod +x /usr/local/bin/startup_script.sh
 
 ENV FLASK_ENV=development
 

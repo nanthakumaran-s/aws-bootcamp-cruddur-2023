@@ -17,6 +17,7 @@
   + [Instrumentation using Honeycomb](#instrumentation-using-honeycomb)
   + [Instrumentation using AWS X Ray](#instrumentation-using-aws-x-ray)
   + [Implementing Cloudwatch logs](#implementing-cloudwatch-logs)
+  + [Implementing Rollbar](#implementing-rollbar)
 
 ---
 ## Activities
@@ -128,3 +129,9 @@ Commit -> [fix: configured aws xray segments and sub segments](https://github.co
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/223083604-0751435c-8ae4-4de2-9a3b-3a5618d1fd27.png">
 
 Commit -> [feat: added cloudwatch logs](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/deb952be477ef889fcafa6e288ef8a219b7ec8e7)
+
+### Implementing Rollbar
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/223127615-f91ba0d4-8031-4c3c-827b-07f3d0b638ea.png">
+
+Commit -> [fix: Configured rollbar and commented out AWS X-Ray & CloudWatch Log](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/ee677095f11491119903d5fc475e6ae8a7feca7d)

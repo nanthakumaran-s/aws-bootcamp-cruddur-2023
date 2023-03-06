@@ -9,6 +9,11 @@ import ReplyForm from '../components/ReplyForm';
 
 // [TODO] Authenication
 import Cookies from 'js-cookie'
+import { getTracer, reportSpan, withTracing } from '../utils/tracing-utils';
+
+// const Profiler = window.Profiler;
+
+const tracer = getTracer();
 
 export default function HomeFeedPage() {
   const [activities, setActivities] = React.useState([]);
@@ -18,18 +23,43 @@ export default function HomeFeedPage() {
   const [user, setUser] = React.useState(null);
   const dataFetchedRef = React.useRef(false);
 
+  const [span, setSpan] = React.useState(null)
+
+  React.useEffect(() => {
+    if (span) {
+      span.end();
+      reportSpan(span);
+    }
+  }, [span]);
+
+
   const loadData = async () => {
     try {
-      const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
-      const res = await fetch(backend_url, {
-        method: "GET"
-      });
-      let resJson = await res.json();
-      if (res.status === 200) {
-        setActivities(resJson)
-      } else {
-        console.log(res)
-      }
+      // let profiler;
+      // if (Profiler) {
+      //   profiler = new Profiler({ sampleInterval: 10, maxBufferSize: 100 });
+      // }
+      const rootSpan = tracer.startSpan('frontend-react-js.home-feed');
+      await withTracing(
+        `home-feed-mock`,
+        async () => {
+          const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
+            const res = await fetch(backend_url, {
+              method: "GET"
+            });
+            let resJson = await res.json();
+            if (res.status === 200) {
+              setActivities(resJson)
+            } else {
+              console.log(res)
+            }
+        },
+        rootSpan,
+      );
+      await setSpan(rootSpan);
+      // if (!profiler) return;
+      // await profiler.stop();
+
     } catch (err) {
       console.log(err);
     }

@@ -5,7 +5,8 @@ from aws_xray_sdk.core import xray_recorder
 tracer = trace.get_tracer("home.activities")
 
 class HomeActivities:
-  def run():
+  def run(logger):
+    logger.info('Hello Cloudwatch! from  /api/activities/home')
     with tracer.start_as_current_span("home-activities-span"):
       subsegment = xray_recorder.begin_subsegment('home-activities-sub-segment')
 

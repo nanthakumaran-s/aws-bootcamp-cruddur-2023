@@ -3,6 +3,7 @@
 ### Key Takeaways this week
 
 - Use different Dockerfile for development, testing and production
+- Expanding experience section with projects, open source works rather than separating them on resume
 
 ### Highlights of this week
 
@@ -18,6 +19,8 @@
   + [Instrumentation using AWS X Ray](#instrumentation-using-aws-x-ray)
   + [Implementing Cloudwatch logs](#implementing-cloudwatch-logs)
   + [Implementing Rollbar](#implementing-rollbar)
+- [Homeworks](#homeworks)
+  + [Cloud Career](#cloud-career)
 
 ---
 ## Activities
@@ -135,3 +138,10 @@ Commit -> [feat: added cloudwatch logs](https://github.com/nanthakumaran-s/aws-b
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/223127615-f91ba0d4-8031-4c3c-827b-07f3d0b638ea.png">
 
 Commit -> [fix: Configured rollbar and commented out AWS X-Ray & CloudWatch Log](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/ee677095f11491119903d5fc475e6ae8a7feca7d)
+
+## Homeworks
+
+### Cloud Career
+
+<img width="708" alt="image" src="https://user-images.githubusercontent.com/59391441/223133596-72363184-b4fa-464d-bbbc-725f8b2bfa4f.png">
+

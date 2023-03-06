@@ -7,3 +7,7 @@ aws sns subscribe \
     --topic-arn arn:aws:sns:us-east-1:252538877482:billing-alarm \
     --protocol email \
     --notification-endpoint nanthakumaran*****@gmail.com
+
+aws xray create-group \
+   --group-name "Cruddur" \
+   --filter-expression "service(\"backend-flask\")"

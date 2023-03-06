@@ -6,11 +6,11 @@ tracer = trace.get_tracer("home.activities")
 
 class HomeActivities:
   def run(logger):
-    logger.info('Hello Cloudwatch! from  /api/activities/home')
+    # logger.info('Hello Cloudwatch! from  /api/activities/home')
     with tracer.start_as_current_span("home-activities-span"):
-      subsegment = xray_recorder.begin_subsegment('home-activities-sub-segment')
+      # subsegment = xray_recorder.begin_subsegment('home-activities-sub-segment')
 
-      segment = xray_recorder.current_segment()
+      # segment = xray_recorder.current_segment()
 
       span = trace.get_current_span()
       now = datetime.now(timezone.utc).astimezone()
@@ -19,8 +19,8 @@ class HomeActivities:
         'timestamp': now.isoformat(),
         'scope': 'home.activities'
       }
-      segment.put_metadata('home.activities-data', resource, 'Resources')
-      subsegment.put_annotation('timestamp', now.isoformat())
+      # segment.put_metadata('home.activities-data', resource, 'Resources')
+      # subsegment.put_annotation('timestamp', now.isoformat())
 
       results = [{
         'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eee',
@@ -63,5 +63,5 @@ class HomeActivities:
       ]
       span.set_attribute("app.now", now.isoformat)
       span.set_attribute("app.result_length", len(results))
-      xray_recorder.end_subsegment()
+      # xray_recorder.end_subsegment()
       return results

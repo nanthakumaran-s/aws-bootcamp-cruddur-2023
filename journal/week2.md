@@ -16,6 +16,7 @@
 - [Activities](#activities)
   + [Instrumentation using Honeycomb](#instrumentation-using-honeycomb)
   + [Instrumentation using AWS X Ray](#instrumentation-using-aws-x-ray)
+  + [Implementing Cloudwatch logs](#implementing-cloudwatch-logs)
 
 ---
 ## Activities
@@ -122,3 +123,8 @@ aws-bootcamp-cruddur-2023-xray-daemon-1        | 2023-03-06T09:58:58Z [Info] Suc
 
 Commit -> [fix: configured aws xray segments and sub segments](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/2724fd0a2b14ca7a8a601f6d2d9a14951073cfc8)
 
+### Implementing Cloudwatch logs
+
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/59391441/223083604-0751435c-8ae4-4de2-9a3b-3a5618d1fd27.png">
+
+Commit -> [feat: added cloudwatch logs](https://github.com/nanthakumaran-s/aws-bootcamp-cruddur-2023/commit/deb952be477ef889fcafa6e288ef8a219b7ec8e7)

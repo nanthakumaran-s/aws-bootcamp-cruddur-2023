@@ -25,11 +25,10 @@ export async function reportSpan(span) {
   // const event = honeycomb.newEvent();
   // event.add(payload);
   // event.send();
-  console.log(process.env.HONEYCOMB_API_KEY)
   await axios
   .post('https://api.honeycomb.io/1/events/frontend-react-js', payload, {
     headers: {
-      'X-Honeycomb-Team': process.env.HONEYCOMB_API_KEY,
+      'X-Honeycomb-Team': "CXAU8RtEGGbjeAsxmFTJSG",
       'X-Honeycomb-Event-Time': startTime[0],
       'Content-Type': 'application/json',
     }

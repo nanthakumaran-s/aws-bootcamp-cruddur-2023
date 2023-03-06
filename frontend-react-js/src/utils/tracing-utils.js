@@ -9,15 +9,14 @@ import axios from 'axios'
 
 export async function reportSpan(span) {
 
-  const { _spanContext, _ended, duration, startTime, endTime, name, parentSpanId } = span;
+  const { _spanContext, duration, startTime, endTime, name, parentSpanId } = span;
 
   const payload = {
-    ..._spanContext,
-    _ended,
+    traceId: _spanContext.traceId,
+    id: _spanContext.spanId,
     name,
     duration_ms: duration[1] / 1000 / 1000,
     endTime: endTime[0],
-    traceId: parentSpanId,
     parentId: parentSpanId,
     timestamp: startTime[0],
   };

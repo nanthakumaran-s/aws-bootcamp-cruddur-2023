@@ -11,7 +11,6 @@ import ReplyForm from '../components/ReplyForm';
 import Cookies from 'js-cookie'
 import { getTracer, reportSpan, withTracing } from '../utils/tracing-utils';
 
-// const Profiler = window.Profiler;
 
 const tracer = getTracer();
 
@@ -35,10 +34,6 @@ export default function HomeFeedPage() {
 
   const loadData = async () => {
     try {
-      // let profiler;
-      // if (Profiler) {
-      //   profiler = new Profiler({ sampleInterval: 10, maxBufferSize: 100 });
-      // }
       const rootSpan = tracer.startSpan('frontend-react-js.home-feed');
       await withTracing(
         `home-feed-mock`,
@@ -57,8 +52,6 @@ export default function HomeFeedPage() {
         rootSpan,
       );
       await setSpan(rootSpan);
-      // if (!profiler) return;
-      // await profiler.stop();
 
     } catch (err) {
       console.log(err);

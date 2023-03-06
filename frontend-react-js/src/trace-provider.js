@@ -5,23 +5,31 @@ import { ZoneContextManager } from '@opentelemetry/context-zone';
 const { Resource } = require('@opentelemetry/resources');
 const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions');
 
+import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xml-http-request';
+import { DocumentLoadInstrumentation } from '@opentelemetry/instrumentation-document-load';
+
 const provider = new WebTracerProvider({
   resource: new Resource({
     [SemanticResourceAttributes.SERVICE_NAME]: 'frontend-react-js',
   }),
 });
-
 provider.register({
   contextManager: new ZoneContextManager()
 });
 
-const fetchInstrumentation = new FetchInstrumentation({});
-
-fetchInstrumentation.setTracerProvider(provider);
-
 registerInstrumentations({
   instrumentations: [
-    fetchInstrumentation,
+    new XMLHttpRequestInstrumentation({
+      propagateTraceHeaderCorsUrls: [
+        new RegExp(`${process.env.REACT_APP_BACKEND_URL}`, 'g')
+      ]
+    }),
+    new FetchInstrumentation({
+      propagateTraceHeaderCorsUrls: [
+        new RegExp(`${process.env.REACT_APP_BACKEND_URL}`, 'g')
+      ]
+    }),
+    new DocumentLoadInstrumentation(),
   ],
 });
 

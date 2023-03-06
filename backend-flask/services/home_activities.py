@@ -61,7 +61,12 @@ class HomeActivities:
         'replies': []
       }
       ]
-      span.set_attribute("app.now", now.isoformat)
+      handles = []
+      for i in results:
+        handles.append(i['handle'])
+      print(handles)
+      span.set_attribute("app.now", now.isoformat())
+      span.set_attribute("app.user_ids", handles)
       span.set_attribute("app.result_length", len(results))
       # xray_recorder.end_subsegment()
       return results

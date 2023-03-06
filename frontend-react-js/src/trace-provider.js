@@ -17,21 +17,17 @@ provider.register({
   contextManager: new ZoneContextManager()
 });
 
+const fetchInstrumentation = new FetchInstrumentation({});
+
+fetchInstrumentation.setTracerProvider(provider);
+
 registerInstrumentations({
   instrumentations: [
-    new XMLHttpRequestInstrumentation({
-      propagateTraceHeaderCorsUrls: [
-        new RegExp(`${process.env.REACT_APP_BACKEND_URL}`, 'g')
-      ]
-    }),
-    new FetchInstrumentation({
-      propagateTraceHeaderCorsUrls: [
-        new RegExp(`${process.env.REACT_APP_BACKEND_URL}`, 'g')
-      ]
-    }),
+    fetchInstrumentation,
+    new XMLHttpRequestInstrumentation({}),
     new DocumentLoadInstrumentation(),
-  ],
-});
+  ]
+})
 
 export default function TraceProvider({ children }) {
   return (

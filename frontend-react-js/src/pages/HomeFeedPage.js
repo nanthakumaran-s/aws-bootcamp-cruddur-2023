@@ -7,6 +7,8 @@ import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
 
+import { Auth } from 'aws-amplify';
+
 // [TODO] Authenication
 import Cookies from 'js-cookie'
 import { getTracer, reportSpan, withTracing } from '../utils/tracing-utils';
@@ -59,21 +61,22 @@ export default function HomeFeedPage() {
   };
 
   const checkAuth = async () => {
-    console.log('checkAuth')
-    // [TODO] Authenication
-    if (Cookies.get('user.logged_in')) {
-      setUser({
-        display_name: Cookies.get('user.name'),
-        handle: Cookies.get('user.username')
-      })
-    }
+    Auth.currentAuthenticatedUser({
+      bypassCache: false 
+    })
+    .then((user) => {
+      console.log('user',user);
+      return Auth.currentAuthenticatedUser()
+    }).then((cognito_user) => {
+        setUser({
+          display_name: cognito_user.attributes.name,
+          handle: cognito_user.attributes.preferred_username
+        })
+    })
+    .catch((err) => console.log(err));
   };
 
   React.useEffect(()=>{
-    //prevents double call
-    if (dataFetchedRef.current) return;
-    dataFetchedRef.current = true;
-
     loadData();
     checkAuth();
   }, [])

@@ -9,8 +9,6 @@ import ReplyForm from '../components/ReplyForm';
 
 import { Auth } from 'aws-amplify';
 
-// [TODO] Authenication
-import Cookies from 'js-cookie'
 import { getTracer, reportSpan, withTracing } from '../utils/tracing-utils';
 
 
@@ -42,7 +40,10 @@ export default function HomeFeedPage() {
         async () => {
           const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
             const res = await fetch(backend_url, {
-              method: "GET"
+              method: "GET",
+              headers: {
+                Authorization: `bearer ${localStorage.getItem('access_token')}`
+              }
             });
             let resJson = await res.json();
             if (res.status === 200) {

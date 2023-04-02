@@ -1,0 +1,13 @@
+{
+    "name": "jwt-sidecar-nodejs",
+    "version": "0.0.0",
+    "private": true,
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "dependencies": {
+      "aws-jwt-verify": "^3.4.0",
+      "express": "~4.16.1"
+    }
+  }

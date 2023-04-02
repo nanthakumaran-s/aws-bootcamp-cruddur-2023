@@ -73,6 +73,11 @@ services:
   #   ports:
   #     - 2000:2000/udp
 
+  envoy-jwt-local:
+    build: ./envoy
+    ports:
+      - "8001:8001"
+
   jwt-sidecar-nodejs:
     build: ./jwt-sidecar-nodejs
     ports:
